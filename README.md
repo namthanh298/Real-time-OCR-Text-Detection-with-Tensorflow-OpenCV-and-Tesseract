@@ -1,0 +1,1 @@
+# Real-time-OCR-Text-Detection-with-Tensorflow-OpenCV-and-Tesseract
