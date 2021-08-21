@@ -12,7 +12,6 @@
 # Để xây dựng và đào tạo một mô hình học sâu như vậy, phương pháp EAST sử dụng các hàm loss mới, được thiết kế cẩn thận.
 # 
 
-# In[1]:
 
 
 import cv2
@@ -23,7 +22,6 @@ import time
 
 # **Quan trọng**: EAST yêu cầu kích thước hình ảnh input là bội số của 32, vì vậy ta phải điều chỉnh các giá trị - width và --height của mình, đảm bảo rằng chúng là bội số của 32 (ví dụ 32x32)
 
-# In[2]:
 
 
 # Load input image
@@ -40,12 +38,10 @@ ratioH = float(H / newH)
 # resize the image and grab the new image dimensions
 image = cv2.resize(image, (newW, newH))
 (H, W) = image.shape[:2]
-H,W
 
 
 # Định nghĩa 2 output layer cho EAST model:
 
-# In[3]:
 
 
 outputLayers = [
@@ -54,18 +50,15 @@ outputLayers = [
 ]  
 
 
-# In[4]:
 
 
 # load pre-trained EAST model
-east_model = cv2.dnn.readNet('E:/My Project/Real-time OCR & Text Detection with Tensorflow, OpenCV and Tesseract/pretrained model/frozen_east_text_detection.pb')
+east_model = cv2.dnn.readNet('pretrained_model/frozen_east_text_detection.pb')
 
 # construct a blob from the image
 blob = cv2.dnn.blobFromImage(image, 1.0, (W,H), 
                             (123.68, 116.78, 103.94), swapRB=True, crop=False)
 
-
-# In[5]:
 
 
 # then perform a forward pass of the model to obtain the two output layer sets
@@ -81,7 +74,6 @@ print("[INFO] text detection took {:.6f} seconds".format(end - start))
 
 # Sau khi đã có các output từ model EAST, trích xuất các thông tin về tọa độ các bounding box, và xác suất tin cậy tương ứng của chúng:
 
-# In[6]:
 
 
 # Định nghĩa hàm prediction_featuring để tiện sử dụng sau này
@@ -135,7 +127,6 @@ def prediction_featuring(proba, coordinate, min_confidence=0.5):
 
 # Bước cuối cùng là áp dụng **Non-max Suppression** (triệt tiêu phi cực đại) cho các bounding box đang có để loại bỏ các box chồng nhau có xác suất tin cậy thấp. Cuối cùng là hiển thị các kết quả nhận diện Text:
 
-# In[ ]:
 
 
 # apply non-maxima suppression to suppress weak, overlapping bounding boxes
@@ -158,8 +149,6 @@ cv2.imshow("Text Detection", copy_image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-
-# In[ ]:
 
 
 
